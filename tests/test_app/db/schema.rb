@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20150207140310) do
     t.text     "referrer"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.string   "article_name"
   end
 
   add_index "impressions", ["controller_name", "action_name", "ip_address"], :name => "controlleraction_ip_index"
