@@ -1,6 +1,7 @@
 ![Impressionist Logo](https://github.com/charlotte-ruby/impressionist/raw/master/logo.png)
 
 [![Build Status](https://secure.travis-ci.org/charlotte-ruby/impressionist.png?branch=master)](http://travis-ci.org/charlotte-ruby/impressionist)
+[![Code Climate](https://codeclimate.com/github/charlotte-ruby/impressionist.png)](https://codeclimate.com/github/charlotte-ruby/impressionist)
 
 impressionist
 =============
@@ -88,11 +89,14 @@ Usage
    not necessary to specify "impressionist" (usage #1) in the top of you
    controller if you are using this method.  If you add "impressionist" to the
    top of your controller and also use this method in your action, it will
-   result in 2 impressions being logged (but associated with one request_hash)
+   result in 2 impressions being logged (but associated with one request_hash).
+   If you're using [friendly_id](https://github.com/norman/friendly_id) be sure 
+   to log impressionist this way, as params[:id] will return a string(url slug) 
+   while impressionable_id is a Integer column in database.
 
         def show
           @widget = Widget.find
-          impressionist(@widget,message:"wtf is a widget?") #message is optional
+          impressionist(@widget, "message...") # 2nd argument is optional
         end
 
 5. Get unique impression count from a model.  This groups impressions by
@@ -122,6 +126,10 @@ Usage
    request, depending on how you are logging impressions
 
         @widget.impressionist_count(:filter=>:all)
+
+9. Get impression count by message.  This only counts impressions of the given message.
+
+        @widget.impressionist_count(:message=>"pageview", :filter=>:all)
 
 Logging impressions for authenticated users happens automatically.  If you have
 a current_user helper or use @current_user in your before_filter to set your
@@ -224,9 +232,10 @@ Want to run the tests? Ok mummy
 
 Contributors
 ------------
-* [johnmcaliley](https://github.com/johnmcaliley)
+* [johnmcaliley - creator](https://github.com/johnmcaliley)
+* [Antonio C Nalesso - maintainer](https://github.com/acnalesso)
 * [coryschires](https://github.com/coryschires)
 * [georgmittendorfer](https://github.com/georgmittendorfer)
-* [Antonio C Nalesso](https://github.com/nbit001)
+
 
 Copyright (c) 2011 John McAliley. See LICENSE.txt for further details.
